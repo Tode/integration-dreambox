@@ -44,7 +44,11 @@ const RC_DREAMBOX_MAP: Record<string, number> = {
   TV: 377,
   RADIO: 385,
   TEXT: 388,
-  RECORD: 167
+  RECORD: 167,
+  EXIT: 1,
+  PLAYPAUSE: 164,
+  TIMESHIFT: 119,
+  SUBTITLE: 370
 };
 
 class DreamboxInfoResult {
@@ -173,9 +177,11 @@ async function getDreamboxPromise<StateType>(
 
 const sendRemoteCommand = async function (
   device: config.DreamboxDevice,
-  commandId: number
+  commandId: number,
+  sendLong: boolean
 ): Promise<DreamboxCommandResult<uc.RemoteStates | undefined>> {
-  const url = `http://${device.address}/web/remotecontrol?command=${commandId}`;
+  let longCommand = sendLong ? '&type=long' : ''
+  const url = `http://${device.address}/web/remotecontrol?command=${commandId}${longCommand}`;
   return getDreamboxPromise<uc.RemoteStates>(
     url,
     device.username,
