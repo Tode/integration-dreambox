@@ -165,12 +165,16 @@ const supportedCommands = Object.keys(dreambox.RC_DREAMBOX_MAP);
 
 // add long press key maps
 for (var key in supportedCommands) {
-        supportedCommands.push(supportedCommands[key]+'_LONG')
+        supportedCommands.push(supportedCommands[key]+'_LONG');
 }
 
 supportedCommands.push("DOWNMIX_ON");
 supportedCommands.push("DOWNMIX_OFF");
 supportedCommands.push("DOWNMIX_TOGGLE");
+
+for (var extKey of Object.keys(dreambox.RC_DREAMBOX_MAP_EXTENDED)) {
+  supportedCommands.push(extKey);
+}
 
 const createButtonMappings = () => {
   return [
